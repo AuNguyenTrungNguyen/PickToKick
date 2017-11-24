@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "598459323616",
+    "firebase_url": "https://picktokick.firebaseio.com",
+    "project_id": "picktokick",
+    "storage_bucket": "picktokick.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598459323616:android:542b3e74b13ef885",
+        "android_client_info": {
+          "package_name": "picktokick.devfest.picktokick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598459323616-i9ihvgleosas0eg5ekp2hkfrc76djf1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzTfJvLCxFxnGMKe4B_CiYs5N0PM7O1Po"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

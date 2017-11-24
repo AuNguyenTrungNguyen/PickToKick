@@ -7,6 +7,8 @@ package picktokick.devfest.picktokick.objects;
 public class Constanttt {
     public static final String SHARE_REF_LOGIN ="SHARE_REF_LOGIN" ;
     public static final String TAG_APP ="PICK_TO_KICH" ;
+    public static final String MATCHs ="MATCHs" ;
+    public static final String FOOTBALL_YARD ="FOOTBALL_YARD" ;
 
 
 

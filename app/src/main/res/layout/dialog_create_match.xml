@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgMatch"
+            android:background="@color/cardview_dark_background"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+        <EditText
+            android:id="@+id/edtName"
+            android:inputType="text"
+            android:hint="Nhập tên vào bạn vào"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <AutoCompleteTextView
+            android:id="@+id/auto_edt_MatchName"
+            android:hint="Tên sân - địa chỉ sân"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtDate"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="asdasdas"
+                android:textColor="@color/colorAccent"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnNgayDa"
+                android:text="Ngay Da"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtTime"
+                android:gravity="center"
+                android:text="asdasdas"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnGioDa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Gio bat dau" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtTimeKetThuc"
+                android:gravity="center"
+                android:text="asdasdas"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnGioKetThuc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Gio ket thuc" />
+        </LinearLayout>
+        <TextView
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="CHỌN THỂ THỨC ĐÁ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:weightSum="0.3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/radioBtn55"
+                android:layout_weight="0.1"
+                android:text="5 vs 5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/radioBtn77"
+                android:layout_weight="0.1"
+                android:text="7 vs 7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/radioBtn1111"
+                android:layout_weight="0.1"
+                android:text="11 vs 11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/edtMoTa"
+            android:inputType="textMultiLine"
+            android:hint="Mô tả sơ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnCancelMatch"
+                android:text="cancel"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnOkMatch"
+                android:text="OK"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

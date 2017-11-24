@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -67,11 +66,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         GPSTracker gpsTracker = new GPSTracker(this);
         loc = gpsTracker.getLocation();
 
-        edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
-        edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
-        edit_login.commit();
+           if(loc != null){
+               edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
+               edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
+               edit_login.commit();
+           }
 
-        Log.e(Constanttt.TAG_APP, loc.getLatitude() + "  " + loc.getLongitude());
+       // Log.e(Constanttt.TAG_APP, loc.getLatitude() + "  " + loc.getLongitude());
         getSupportActionBar().hide();
         //config facebook
         FacebookSdk.sdkInitialize(getApplicationContext());

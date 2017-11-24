@@ -1,0 +1,61 @@
+<resources>
+<!--Defaultscreenmargins,pertheAndroidDesignguidelines.-->
+
+
+<dimen name="textSize15">11.25sp</dimen>
+<dimen name="textSize16">12.0sp</dimen>
+<dimen name="textSize17">12.75sp</dimen>
+<dimen name="textSize18">13.5sp</dimen>
+<dimen name="textSize20">15.0sp</dimen>
+<dimen name="textSize26">19.5sp</dimen>
+<dimen name="textSize23">17.25sp</dimen>
+<dimen name="textSize30">22.5sp</dimen>
+<dimen name="textSize40">30.0sp</dimen>
+
+<dimen name="value0">0.0dp</dimen>
+<dimen name="value1">0.75dp</dimen>
+<dimen name="value2">1.5dp</dimen>
+<dimen name="value3">2.25dp</dimen>
+<dimen name="value4">3.0dp</dimen>
+<dimen name="value5">3.75dp</dimen>
+<dimen name="value8">6.0dp</dimen>
+<dimen name="value10">7.5dp</dimen>
+<dimen name="value11">8.25dp</dimen>
+<dimen name="value12">9.0dp</dimen>
+<dimen name="value13">9.75dp</dimen>
+<dimen name="value15">11.25dp</dimen>
+<dimen name="value16">12.0dp</dimen>
+<dimen name="value20">15.0dp</dimen>
+<dimen name="value25">18.75dp</dimen>
+<dimen name="value30">22.5dp</dimen>
+<dimen name="value32">24.0dp</dimen>
+<dimen name="value35">26.25dp</dimen>
+<dimen name="value40">30.0dp</dimen>
+<dimen name="value45">33.75dp</dimen>
+<dimen name="value48">36.0dp</dimen>
+<dimen name="value50">37.5dp</dimen>
+<dimen name="value60">45.0dp</dimen>
+<dimen name="value70">52.5dp</dimen>
+<dimen name="value76">57.0dp</dimen>
+<dimen name="value80">60.0dp</dimen>
+
+<dimen name="value100">75.0dp</dimen>
+<dimen name="value110">82.5dp</dimen>
+<dimen name="value115">86.25dp</dimen>
+<dimen name="value120">90.0dp</dimen>
+<dimen name="value130">97.5dp</dimen>
+<dimen name="value140">105.0dp</dimen>
+<dimen name="value150">112.5dp</dimen>
+<dimen name="value192">144.0dp</dimen>
+<dimen name="value200">150.0dp</dimen>
+<dimen name="value210">157.5dp</dimen>
+<dimen name="value250">187.5dp</dimen>
+<dimen name="value280">210.0dp</dimen>
+<dimen name="value325">243.75dp</dimen>
+<dimen name="value360">270.0dp</dimen>
+<dimen name="value400">300.0dp</dimen>
+<!--Defaultscreenmargins,pertheAndroidDesignguidelines.-->
+<dimen name="activity_horizontal_margin">12.0dp</dimen>
+<dimen name="activity_vertical_margin">12.0dp</dimen>
+
+</resources>

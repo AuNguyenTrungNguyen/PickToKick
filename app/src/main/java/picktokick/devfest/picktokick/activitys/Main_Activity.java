@@ -310,7 +310,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         } else {
             tranbanh.setTypeOfMatch("11vs11");
         }
-        //thể loại đá//
+
 
 
         tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));

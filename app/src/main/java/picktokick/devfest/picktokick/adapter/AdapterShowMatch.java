@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,12 +104,6 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
                 }
             });
 
-            holder.btnShowInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfo();
-                }
-            });
 
             holder.btnChat.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,9 +122,6 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
         context.startActivity(intent);
     }
 
-    private void showInfo() {
-
-    }
 
     private void accept(Match match) {
 
@@ -172,7 +164,8 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameOfHost, txtTime, txtAddress, txtType, txtInfoMember, txtDescription;
-        ImageView imgShowMatch,btnAccept, btnShowInfo, btnChat;
+        ImageView imgShowMatch;
+        Button btnAccept, btnChat;
         CircleImageView imgADDsmall;
         public RecyclerViewHolder(final View itemView) {
 
@@ -188,7 +181,6 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             imgShowMatch = itemView.findViewById(R.id.imgShowMatch);
             imgADDsmall=itemView.findViewById(R.id.imgAnhDaiDienSmall);
             btnAccept = itemView.findViewById(R.id.btnAccept);
-            btnShowInfo = itemView.findViewById(R.id.btnShowInfo);
             btnChat = itemView.findViewById(R.id.btnChat);
         }
     }

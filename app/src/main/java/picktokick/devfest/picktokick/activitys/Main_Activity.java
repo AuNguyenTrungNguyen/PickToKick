@@ -158,6 +158,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
         getSupportActionBar().setTitle("Trang chủ");
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -184,7 +185,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_refresh was selected
             case R.id.action_create_match:
                 ShowDialog_CreateTeam();
                 break;

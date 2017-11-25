@@ -1,6 +1,7 @@
 package picktokick.devfest.picktokick.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,12 +16,14 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import picktokick.devfest.picktokick.R;
+import picktokick.devfest.picktokick.activitys.ChatActivity;
 import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Match;
 import picktokick.devfest.picktokick.objects.Member;
@@ -106,14 +109,17 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             holder.btnChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    chat();
+                    chat(match);
                 }
             });
         }
     }
 
-    private void chat() {
-
+    private void chat(Match match) {
+        List<Member> memberList = match.getListMember();
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("listMember", (Serializable) memberList);
+        context.startActivity(intent);
     }
 
     private void showInfo() {
@@ -161,8 +167,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameOfHost, txtTime, txtAddress, txtType, txtInfoMember, txtDescription;
-        ImageView imgShowMatch;
-        Button btnAccept, btnShowInfo, btnChat;
+        ImageView imgShowMatch,btnAccept, btnShowInfo, btnChat;
 
         public RecyclerViewHolder(final View itemView) {
 

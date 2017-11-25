@@ -43,7 +43,6 @@ public class Fragment_ThoiTiet extends Fragment {
         return fragment;
     }
 
-
     private WeatherAdapter weatherAdapter;
     private AdapterWeather adapterWeather;
     private RecyclerView recyclerView;
@@ -61,8 +60,6 @@ public class Fragment_ThoiTiet extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.lisWea);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
 
         return  view;
     }

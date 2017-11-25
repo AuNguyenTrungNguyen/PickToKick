@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_thoitiet"
-        android:icon="@mipmap/ic_weather"
+        android:icon="@drawable/ic_weather_black"
         android:title="@string/title_home"
         />
 

@@ -10,9 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import picktokick.devfest.picktokick.R;
 import picktokick.devfest.picktokick.adapter.HeaderAdapter;
@@ -53,20 +56,39 @@ public class ChatActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(mAdapter);
 
-        prepareMovieData();
+        getDataFromAdapter();
+
     }
 
-    private void prepareMovieData() {
+
+    private void getDataFromAdapter() {
+        List<Member> memberList = (List<Member>) getIntent().getSerializableExtra("listMember");
+        Log.e("TAG", String.valueOf(memberList.size()));
+        createOrReplaceGroupChat(memberList.get(0).getIdMember());
+        Log.e("TAG","id Truong nhoms" + memberList.get(0).getIdMember());
+        //set title for layout
+        setTitle(memberList.get(0).getNameOfMember());
+    }
+
+    /**
+     * Ham nay dung de khoi tao mot group chat dau vao id cua nguoi khoi tao nhom
+     * @param id
+     * */
+    private void createOrReplaceGroupChat(String id){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
+        Map<String,Object> map = new HashMap<>();
+        map.put(id,"");
+        root.updateChildren(map);
+    }
+
+    private void getDataChatFromGroupName(String id) {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(id);
+
         MessageObj message = new MessageObj("An",null,null,"Xin Chao",null,false);
         MessageObj message2 = new MessageObj("An",null,null,"Xin Chao",null,true);
         messageList.add(message);
         messageList.add(message2);
         mAdapter.notifyDataSetChanged();
 
-    }
-
-    private void getDataFromAdapter() {
-        List<Member> memberList = (List<Member>) getIntent().getSerializableExtra("listMember");
-        Log.e("TAG", String.valueOf(memberList.size()));
     }
 }

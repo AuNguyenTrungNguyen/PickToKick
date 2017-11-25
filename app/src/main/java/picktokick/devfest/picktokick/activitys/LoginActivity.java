@@ -91,75 +91,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginButton = (LoginButton) findViewById(R.id.btnlogin);
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_LONG).show();
-                GraphRequest request = GraphRequest.newMeRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object,
-                                                    GraphResponse response) {
-                                // Application code
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_LONG).show();
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            AccessToken.getCurrentAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object,
+                                                        GraphResponse response) {
+                                    // Application code
 
-                                name = object.optString(getString(R.string.name));
-                                id = object.optString(getString(R.string.id));
-                                email = object.optString(getString(R.string.email));
-                                link = object.optString(getString(R.string.link));
-                                imageURL = extractFacebookIcon(id);
-                                User user = new User();
-                                user.setIdUser(id);
-                                user.setLinkAvataUser(imageURL.toString());
-                                user.setTenUser(name);
+                                    name = object.optString(getString(R.string.name));
+                                    id = object.optString(getString(R.string.id));
+                                    email = object.optString(getString(R.string.email));
+                                    link = object.optString(getString(R.string.link));
+                                    imageURL = extractFacebookIcon(id);
+                                    User user = new User();
+                                    user.setIdUser(id);
+                                    user.setLinkAvataUser(imageURL.toString());
+                                    user.setTenUser(name);
 
 
-                                if(loc!=null)
-                                {
-                                    user.setX(Double.parseDouble(ref.getString(Constanttt.LOGIN_LATITUDE, null)));
-                                    user.setY(Double.parseDouble(ref.getString(Constanttt.LOGIN_LONGITUDE, null)));
+                                    if(loc!=null)
+                                    {
+                                        user.setX(Double.parseDouble(ref.getString(Constanttt.LOGIN_LATITUDE, null)));
+                                        user.setY(Double.parseDouble(ref.getString(Constanttt.LOGIN_LONGITUDE, null)));
+                                    }
+
+                                    ArrayList<Friend> listFr = new ArrayList<>();
+                                    listFr.add(new Friend("124124124124", "abcd.com", "quoc", 0, 0));
+                                    listFr.add(new Friend("325251512355", "abcd1.com", "tam", 11, 11));
+                                    listFr.add(new Friend("634631621523", "abcd2.com", "nguyen", 23, 12));
+                                    user.setListFriends(listFr);
+                                    user.setListWait(null);
+                                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                                    database.child(Constanttt.USERS).child(id).setValue(user);
+
+
+                                    //luu data facebook vao share
+                                    edit_login = ref.edit();
+                                    edit_login.putString(Constanttt.LOGIN_ID, id);
+                                    edit_login.putString(Constanttt.LOGIN_NAME, name);
+                                    edit_login.putString(Constanttt.LOGIN_LINK_IMG, imageURL.toString());
+                                    edit_login.apply();
+
                                 }
+                            });
+                    Bundle parameters = new Bundle();
+                    parameters.putString(getString(R.string.fields), getString(R.string.fields_name));
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                    startActivity(new Intent(LoginActivity.this, Main_Activity.class));
+                    //dang nhap xong thi finish activity nay
+                    finish();
+                }
 
-                                ArrayList<Friend> listFr = new ArrayList<>();
-                                listFr.add(new Friend("124124124124", "abcd.com", "quoc", 0, 0));
-                                listFr.add(new Friend("325251512355", "abcd1.com", "tam", 11, 11));
-                                listFr.add(new Friend("634631621523", "abcd2.com", "nguyen", 23, 12));
-                                user.setListFriends(listFr);
-                                user.setListWait(null);
-                                DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                                database.child(Constanttt.USERS).child(id).setValue(user);
+                @Override
+                public void onCancel() {
+                    Toast.makeText(LoginActivity.this, "Login  canceled.", Toast.LENGTH_LONG).show();
+                }
 
+                @Override
+                public void onError(FacebookException e) {
+                    //Log.e(Constanttt.TAG_TAG,e.toString());
+                    Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
-                                //luu data facebook vao share
-                                edit_login = ref.edit();
-                                edit_login.putString(Constanttt.LOGIN_ID, id);
-                                edit_login.putString(Constanttt.LOGIN_NAME, name);
-                                edit_login.putString(Constanttt.LOGIN_LINK_IMG, imageURL.toString());
-                                edit_login.apply();
-
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString(getString(R.string.fields), getString(R.string.fields_name));
-                request.setParameters(parameters);
-                request.executeAsync();
-                startActivity(new Intent(LoginActivity.this, Main_Activity.class));
-                //dang nhap xong thi finish activity nay
-                finish();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivity.this, "Login  canceled.", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-                //Log.e(Constanttt.TAG_TAG,e.toString());
-                Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     //lay url image
     public URL extractFacebookIcon(String id) {
@@ -185,6 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
         LoginManager.getInstance().logInWithReadPermissions(
                 this
                 , Arrays.asList("public_profile", "user_friends", "email"));

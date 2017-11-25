@@ -123,6 +123,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
         List<Member> memberList = match.getListMember();
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("listMember", (Serializable) memberList);
+        intent.putExtra("time",match.getThoigian());
         context.startActivity(intent);
     }
 

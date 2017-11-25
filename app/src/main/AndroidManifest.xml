@@ -50,8 +50,11 @@
         </activity>
         <activity
             android:name=".activitys.Main_Activity"
-            android:label="@string/title_activity_main_" />
-        <activity android:name=".activitys.ChatActivity"></activity>
+            android:label="@string/title_activity_main_" >
+        </activity>
+        <activity android:name=".activitys.ChatActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package picktokick.devfest.picktokick.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import picktokick.devfest.picktokick.R;
+import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.MessageObj;
 
 /**
@@ -49,14 +53,15 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Sender sender = (Sender) holder;
                 MessageObj message = listMessage.get(position);
                 sender.txtBodyMessage.setText(message.getBodyMessage());
-                //sender.txtDate.setText(message.getDateSent());
+                sender.txtDate.setText(message.getDateSent());
                 break;
             case 1:
                 Receieve receieve = (Receieve) holder;
                 MessageObj message2 = listMessage.get(position);
                 receieve.txtMassageName.setText(message2.getUserName());
                 receieve.txtBodyMessage.setText(message2.getBodyMessage());
-                //receieve.txtDate.setText(message2.getDateSent());
+                receieve.txtDate.setText(message2.getDateSent());
+                Glide.with(mContext).load(message2.getUrlPicture()).into(receieve.imvMassgeProfile);
                 break;
         }
     }
@@ -72,12 +77,17 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      * */
     @Override
     public int getItemViewType(int position) {
-        if (listMessage.get(position).isCheckSend()){
-            Log.e("TAG"," Mot 0");
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(Constanttt.SHARE_REF_LOGIN,mContext.MODE_PRIVATE);
+        if(listMessage.get(position).getIdMember().equals(sharedPreferences.getString(Constanttt.LOGIN_ID,""))){
             return 0;
         }
-        Log.e("TAG","Ko 1");
         return 1;
+//        if (listMessage.get(position).isCheckSend()){
+//            Log.e("TAG"," Mot 0");
+//            return 0;
+//        }
+//        Log.e("TAG","Ko 1");
+//        return 1;1
     }
 
 

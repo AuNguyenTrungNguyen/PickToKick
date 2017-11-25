@@ -1,10 +1,12 @@
 package picktokick.devfest.picktokick.objects;
 
+import java.io.Serializable;
+
 /**
  * Created by phamh on 11/24/2017.
  */
 
-public class MessageObj {
+public class MessageObj implements Serializable{
     private String userName;
     private String dateSent;
     private String urlPicture;
@@ -19,6 +21,9 @@ public class MessageObj {
         this.bodyMessage = bodyMessage;
         this.idMember = idMember;
         this.isCheckSend = isCheckSend;
+    }
+
+    public MessageObj() {
     }
 
     public String getUserName() {

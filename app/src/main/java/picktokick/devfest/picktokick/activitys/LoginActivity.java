@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         ref = getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE);
         edit_login = ref.edit();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -118,8 +120,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 edit_login.putString(Constanttt.LOGIN_ID, id);
                                 edit_login.putString(Constanttt.LOGIN_NAME, name);
                                 edit_login.putString(Constanttt.LOGIN_LINK_IMG, imageURL.toString());
-                                edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
-                                edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
+                                if(loc != null){
+                                    edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
+                                    edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
+                                }
                                 edit_login.apply();
                             }
                         });

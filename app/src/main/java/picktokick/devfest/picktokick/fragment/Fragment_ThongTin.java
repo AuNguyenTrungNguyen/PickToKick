@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +42,7 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
     private ProfileAdapter adapter_profile;
     private ArrayList<String> listProfile;
     private EditText edtInputAddFr;
-    private boolean boolCLickXemTHu = true;
+
     private TextView name;
     private CircleImageView anhDaiDien;
     private Button btnLogout;
@@ -158,8 +157,6 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
         Button btnXemThu, btnok, btncancel;
         btncancel = (Button) dialog0.findViewById(R.id.btnCancelAddFr);
         btnok = (Button) dialog0.findViewById(R.id.btnOkAddFr);
-        final TextView txttenXemThu = (TextView) dialog0.findViewById(R.id.txtXemThuName);
-        final ImageView imgADD = (ImageView) dialog0.findViewById(R.id.imgXemThu);
         btnXemThu = (Button) dialog0.findViewById(R.id.btnXemAvata);
 
 
@@ -178,14 +175,6 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                                     .load(a[1])
                                     .into(imgADD);*/
                     //load anh bang glide
-                    if (boolCLickXemTHu) {
-                        imgADD.setVisibility(View.INVISIBLE);
-
-                        boolCLickXemTHu = false;
-                    } else {
-                        imgADD.setVisibility(View.GONE);
-                        boolCLickXemTHu = true;
-                    }
                 }
             }
         });

@@ -1,6 +1,7 @@
 package picktokick.devfest.picktokick.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import picktokick.devfest.picktokick.R;
+import picktokick.devfest.picktokick.activitys.ChatActivity;
 import picktokick.devfest.picktokick.objects.Match;
 
 /**
@@ -107,7 +109,12 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
     }
 
     private void chat() {
-
+//        //Ten nhom
+//        //id nguoi dung
+//        //url hinh nguoi dung
+//
+//        Intent intent = new Intent(context, ChatActivity.class);
+//        intent.putExtra("")
     }
 
     private void showInfo() {

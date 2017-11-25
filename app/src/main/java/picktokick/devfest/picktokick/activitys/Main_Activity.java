@@ -50,20 +50,18 @@ import picktokick.devfest.picktokick.fragment.Fragment_ThoiTiet;
 import picktokick.devfest.picktokick.fragment.Fragment_ThongTin;
 import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Match;
+import picktokick.devfest.picktokick.objects.Member;
 import picktokick.devfest.picktokick.objects.Yard;
 
 public class Main_Activity extends AppCompatActivity implements View.OnClickListener {
-    BottomNavigationView navigation;
-    private int mMenuId;
-    private int soluongYard;
-    private String myId;
-    private ArrayList<Yard> listYard;
-    private ArrayList<String> listNameYard;
-    private ArrayAdapter<String> adapteryard;
-    private Date dateFinish;
-    private Date hourFinish;
-    private DatabaseReference database;
-    private TextView txtTime, txtDate, txtTimeketthuc;
+    int soluongYard;
+    ArrayList<Yard> listYard;
+    ArrayList<String> listNameYard;
+    ArrayAdapter<String> adapteryard;
+    Date dateFinish;
+    Date hourFinish;
+    DatabaseReference database;
+    TextView txtTime, txtDate, txtTimeketthuc;
     private FragmentTransaction ft;
     private FragmentManager fm;
     private Dialog dialog;
@@ -79,7 +77,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             switch (item.getItemId()) {
                 case R.id.navigation_thoitiet:
                     getSupportActionBar().setTitle("Thời tiết");
@@ -106,7 +103,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
         database = FirebaseDatabase.getInstance().getReference();
-
         init();
 
     }
@@ -160,9 +156,8 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         });
 
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
         getSupportActionBar().setTitle("Trang chủ");
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -176,9 +171,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                         + "\n" + ref.getString(Constanttt.LOGIN_LATITUDE, null)
                         + "\n" + ref.getString(Constanttt.LOGIN_LONGITUDE, null)
         );
-        myId=ref.getString(Constanttt.LOGIN_ID, null);
-
-
     }
 
 
@@ -292,7 +284,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     txtTime.setText(i + ":" + i1);
 
                 } else {
-                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 1))) {
+                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 2))) {
                         Toast.makeText(Main_Activity.this, "Gio ket thuc khong the nho hon gio bat dau!", Toast.LENGTH_SHORT).show();
                     } else {
                         txtTimeketthuc.setText(i + ":" + i1);
@@ -307,8 +299,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
     private void XuLyCreate_Match() {
 
+        String idMatch = getDateTimeSystem();
         Match tranbanh = new Match();
-        tranbanh.setIdMatch(getDateTimeSystem());//id trận
+        tranbanh.setIdMatch(idMatch);//id trận
         tranbanh.setAddressMatch(autoCompleteTextViewMatch.getText().toString());//địa chỉ trạn
         tranbanh.setIdPoster(getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE).getString(Constanttt.LOGIN_ID, null));
         tranbanh.setNameOfPoster(edtName.getText().toString());
@@ -325,14 +318,18 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
         //thời gian của trận
         Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
-        ArrayList<String> listIdMem = new ArrayList<>();
+        ArrayList<Member> listMem = new ArrayList<>();
 
-        listIdMem.add(myId);
-        listIdMem.add("111111111111");
-        listIdMem.add("222222222222");
-        listIdMem.add("333333333333");
-        listIdMem.add("444444444444");
-        tranbanh.setListMember(listIdMem);//lít thanh viên
+        //chinh cho nay lai
+        SharedPreferences preferences = this.getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE);
+        Member member = new Member();
+        member.setIdMember(preferences.getString(Constanttt.LOGIN_ID, ""));
+        member.setNameOfMember(preferences.getString(Constanttt.LOGIN_NAME, ""));
+        member.setUrlMember(preferences.getString(Constanttt.LOGIN_LINK_IMG, ""));
+        listMem.add(member);
+        //toi day
+
+        tranbanh.setListMember(listMem);//lít thanh viên
 
         tranbanh.setDescription(edtMota.getText().toString());// mo ta
 
@@ -347,7 +344,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Đang tạo trận banh....");
         progressDialog.show();
-        database.child(Constanttt.MATCHs).child(getDateTimeSystem()).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(Constanttt.MATCHs+"Test").child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();

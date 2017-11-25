@@ -11,8 +11,7 @@ public class Member implements Serializable{
     private String nameOfMember;
     private String urlMember;
 
-    public Member() {
-    }
+    public Member() {}
 
     public String getIdMember() {
         return idMember;

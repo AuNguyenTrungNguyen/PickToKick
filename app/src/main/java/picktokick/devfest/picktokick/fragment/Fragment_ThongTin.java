@@ -157,27 +157,7 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
         Button btnXemThu, btnok, btncancel;
         btncancel = (Button) dialog0.findViewById(R.id.btnCancelAddFr);
         btnok = (Button) dialog0.findViewById(R.id.btnOkAddFr);
-        btnXemThu = (Button) dialog0.findViewById(R.id.btnXemAvata);
 
-
-        //btn xem thu avt nguoi ban
-        btnXemThu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (edtInputAddFr.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "Vui lòng nhập thông tin cần thiết để tìm người bạn!", Toast.LENGTH_SHORT).show();
-                } else {
-                           /* String a[] = getUserByID(edtInputAddFr.getText().toString());
-                            // Log.e(Constanttt.TAG_APP,"xxxx "+a[1]);
-                            txttenXemThu.setText(a[0]);
-                            Glide.with(getContext())
-                                    .load(a[1])
-                                    .into(imgADD);*/
-                    //load anh bang glide
-                }
-            }
-        });
         //button cancel ko ket ban
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

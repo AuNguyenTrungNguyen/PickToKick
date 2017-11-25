@@ -5,10 +5,11 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:padding="@dimen/value40"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="CeoS_Team"
+        android:text="Pick to Kick"
         android:textSize="@dimen/value50"
         android:textStyle="bold" />
     <TextView
@@ -16,5 +17,6 @@
         android:textColor="#014dff"
         android:text="@string/phanhoi"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/value40"/>
 </LinearLayout>

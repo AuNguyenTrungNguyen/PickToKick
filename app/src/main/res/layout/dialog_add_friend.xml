@@ -2,45 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
     <TextView
         android:layout_margin="@dimen/value8"
         android:textStyle="bold"
         android:textColor="#000"
-        android:text="Nhập tên người bạn cần tìm,Muốn chính xác hãy xem ID người ấy mà nhập vào ID"
+        android:text="Nhập vào ID người bạn cần tìm (Xem tại trang thông tin của ứng dụng)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
         android:layout_marginStart="@dimen/value8"
         android:layout_marginLeft="@dimen/value8"
         android:id="@+id/edtInputAddFr"
-        android:hint="Nhập 4728785278578 hoặc Huỳnh Quốc"
+        android:hint="Nhập ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
          />
     <LinearLayout
-        android:gravity="center"
+        android:weightSum="5"
+        android:gravity="right"
         android:orientation="horizontal"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+
+            android:background="@color/transparent100"
+            android:layout_weight="1"
+            android:id="@+id/btnOkAddFr"
+            android:text="OK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:background="@color/transparent100"
             android:layout_weight="1"
             android:id="@+id/btnCancelAddFr"
-            android:text="hủy"
+            android:text="Hủy"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/btnOkAddFr"
-            android:text="Ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/btnXemAvata"
-            android:text="xem thử"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </LinearLayout>

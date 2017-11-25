@@ -69,7 +69,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
     private Button btnChooseTime, btnCancelMatch, btnOkmatch, btnNgayDa, btnGioDa, btnGioKetThuc;
     private EditText edtName, edtMota;
     private AutoCompleteTextView autoCompleteTextViewMatch;
-    private ImageView imgmatch;
     private RadioButton rd55, rd77, rd1111;
     private Calendar today;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -226,13 +225,11 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         rd77 = (RadioButton) dialog.findViewById(R.id.radioBtn77);
         rd1111 = (RadioButton) dialog.findViewById(R.id.radioBtn1111);
 
-        imgmatch = (ImageView) dialog.findViewById(R.id.imgMatch);
 
         btnOkmatch.setOnClickListener(this);
         btnGioDa.setOnClickListener(this);
         btnNgayDa.setOnClickListener(this);
         btnCancelMatch.setOnClickListener(this);
-        imgmatch.setOnClickListener(this);
         btnGioKetThuc.setOnClickListener(this);
     }
 
@@ -254,8 +251,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnGioKetThuc:
                 showTimePickerDialog(false);
-                break;
-            case R.id.imgMatch:
                 break;
         }
     }

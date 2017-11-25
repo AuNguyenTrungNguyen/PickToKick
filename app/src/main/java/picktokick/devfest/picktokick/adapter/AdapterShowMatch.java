@@ -77,9 +77,9 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             holder.txtNameOfHost.setText(nameOfHost);
             holder.txtTime.setText(time);
             holder.txtAddress.setText(address);
-            holder.txtType.setText(type);
-            holder.txtInfoMember.setText(info);
-            holder.txtDescription.setText(description);
+            holder.txtType.setText("Loại sân: " + type);
+            holder.txtInfoMember.setText("Thành viên: " + info);
+            holder.txtDescription.setText("Mô tả: " + description);
 
             Glide.with(context).load(url).into(holder.imgShowMatch);
 

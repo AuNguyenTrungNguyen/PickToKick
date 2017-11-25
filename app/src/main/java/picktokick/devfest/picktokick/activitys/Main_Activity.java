@@ -158,6 +158,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
         getSupportActionBar().setTitle("Trang chủ");
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -184,7 +185,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_refresh was selected
             case R.id.action_create_match:
                 ShowDialog_CreateTeam();
                 break;
@@ -284,7 +284,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     txtTime.setText(i + ":" + i1);
 
                 } else {
-                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 2))) {
+                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 1))) {
                         Toast.makeText(Main_Activity.this, "Gio ket thuc khong the nho hon gio bat dau!", Toast.LENGTH_SHORT).show();
                     } else {
                         txtTimeketthuc.setText(i + ":" + i1);
@@ -326,7 +326,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         member.setUrlMember(preferences.getString(Constanttt.LOGIN_LINK_IMG, ""));
         listMem.add(member);
         //toi day
-
+        tranbanh.setUrlPoster(preferences.getString(Constanttt.LOGIN_LINK_IMG,null));
         tranbanh.setListMember(listMem);//lít thanh viên
 
         tranbanh.setDescription(edtMota.getText().toString());// mo ta
@@ -342,7 +342,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Đang tạo trận banh....");
         progressDialog.show();
-        database.child(Constanttt.MATCHs+"Test").child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(Constanttt.MATCHs).child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();

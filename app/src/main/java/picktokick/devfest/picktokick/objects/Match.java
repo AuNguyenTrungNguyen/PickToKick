@@ -12,6 +12,7 @@ public class Match implements Serializable{
     private String addressMatch;
     private String idPoster;
     private String nameOfPoster;
+    private String urlPoster;
     private String typeOfMatch;
     private String thoigian;
     private List<Member> listMember;
@@ -23,11 +24,12 @@ public class Match implements Serializable{
     public Match() {
     }
 
-    public Match(String idMatch, String addressMatch, String idPoster, String nameOfPoster, String typeOfMatch, String thoigian, List<Member> listMember, String description, String urlOfMatch, double xMatch, double yMatch) {
+    public Match(String idMatch, String addressMatch, String idPoster, String nameOfPoster, String urlPoster, String typeOfMatch, String thoigian, List<Member> listMember, String description, String urlOfMatch, double xMatch, double yMatch) {
         this.idMatch = idMatch;
         this.addressMatch = addressMatch;
         this.idPoster = idPoster;
         this.nameOfPoster = nameOfPoster;
+        this.urlPoster = urlPoster;
         this.typeOfMatch = typeOfMatch;
         this.thoigian = thoigian;
         this.listMember = listMember;
@@ -67,6 +69,14 @@ public class Match implements Serializable{
 
     public void setNameOfPoster(String nameOfPoster) {
         this.nameOfPoster = nameOfPoster;
+    }
+
+    public String getUrlPoster() {
+        return urlPoster;
+    }
+
+    public void setUrlPoster(String urlPoster) {
+        this.urlPoster = urlPoster;
     }
 
     public String getTypeOfMatch() {
@@ -124,10 +134,4 @@ public class Match implements Serializable{
     public void setyMatch(double yMatch) {
         this.yMatch = yMatch;
     }
-
-   /* @Override
-    public int compareTo(@NonNull Match match) {
-        int compareQuantity = (int)Double.parseDouble((match).getThoigian());
-        return (int)Double.parseDouble(this.getThoigian()) - compareQuantity;
-    }*/
 }

@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import picktokick.devfest.picktokick.R;
@@ -52,7 +54,11 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
         if(match != null){
             //lấy thông tin
             String nameOfHost = listData.get(position).getNameOfPoster();
-            String time = listData.get(position).getThoigian();
+            String timeString = listData.get(position).getThoigian();
+            long value = Long.parseLong(timeString);
+            Date date =new Date(value);
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String time = df.format(date);
             String address = listData.get(position).getAddressMatch();
             String type = listData.get(position).getTypeOfMatch();
             String info = "";

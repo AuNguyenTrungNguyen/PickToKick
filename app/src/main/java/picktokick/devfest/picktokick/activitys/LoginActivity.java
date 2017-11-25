@@ -1,5 +1,6 @@
 package picktokick.devfest.picktokick.activitys;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,19 +29,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.json.JSONObject;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
 
 import picktokick.devfest.picktokick.R;
 import picktokick.devfest.picktokick.objects.Constanttt;
+import picktokick.devfest.picktokick.objects.Friend;
 import picktokick.devfest.picktokick.objects.User;
 import picktokick.devfest.picktokick.service.GPSTracker;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    public static String name, id, email, link;
+    public String name, id, email, link;
     LocationManager locationManager;
     Location loc;
     SharedPreferences ref;
     SharedPreferences.Editor edit_login;
+    int time = 0;
+    Timer timer;
+    ProgressDialog dialog;
     private CallbackManager callbackManager;
     private FacebookCallback<LoginResult> loginResult;
     private LoginButton loginButton;
@@ -63,16 +70,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!locationManager.isProviderEnabled(locationManager.GPS_PROVIDER)) {
             turnGPSOn();
         }
+
         GPSTracker gpsTracker = new GPSTracker(this);
         loc = gpsTracker.getLocation();
 
-           if(loc != null){
-               edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
-               edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
-               edit_login.commit();
-           }
-
-       // Log.e(Constanttt.TAG_APP, loc.getLatitude() + "  " + loc.getLongitude());
+        if (loc != null) {
+            edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
+            edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
+            edit_login.commit();
+        }
+        // Log.e(Constanttt.TAG_APP, loc.getLatitude() + "  " + loc.getLongitude());
         getSupportActionBar().hide();
         //config facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -84,66 +91,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginButton = (LoginButton) findViewById(R.id.btnlogin);
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_LONG).show();
-                GraphRequest request = GraphRequest.newMeRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object,
-                                                    GraphResponse response) {
-                                // Application code
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_LONG).show();
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            AccessToken.getCurrentAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object,
+                                                        GraphResponse response) {
+                                    // Application code
 
-                                name = object.optString(getString(R.string.name));
-                                id = object.optString(getString(R.string.id));
-                                email = object.optString(getString(R.string.email));
-                                link = object.optString(getString(R.string.link));
-                                imageURL = extractFacebookIcon(id);
-                                /*Log.e(Constanttt.TAG_TAG, name);
-                                Log.e(Constanttt.TAG_TAG, id);
-                                Log.e(Constanttt.TAG_TAG, email);
-                                Log.e(Constanttt.TAG_TAG, link);
-                                Log.e(Constanttt.TAG_TAG, imageURL.toString());
-                                */
-                                DatabaseReference database= FirebaseDatabase.getInstance().getReference();
-                                User user = new User();
-                                user.setIdUser(id);
-                                user.setLinkAvataUser(imageURL.toString());
-                                user.setTenUser(name);
-                                user.setListFriends(null);
-                                database.child(Constanttt.USERS).child(id).setValue(user);
-                                //luu data facebook vao share
-                                edit_login.putString(Constanttt.LOGIN_ID, id);
-                                edit_login.putString(Constanttt.LOGIN_NAME, name);
-                                edit_login.putString(Constanttt.LOGIN_LINK_IMG, imageURL.toString());
-                                edit_login.putString(Constanttt.LOGIN_LATITUDE, String.valueOf(loc.getLatitude()));
-                                edit_login.putString(Constanttt.LOGIN_LONGITUDE, String.valueOf(loc.getLongitude()));
-                                edit_login.apply();
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString(getString(R.string.fields), getString(R.string.fields_name));
-                request.setParameters(parameters);
-                request.executeAsync();
-                startActivity(new Intent(LoginActivity.this, Main_Activity.class));
-                //dang nhap xong thi finish activity nay
-                finish();
-            }
+                                    name = object.optString(getString(R.string.name));
+                                    id = object.optString(getString(R.string.id));
+                                    email = object.optString(getString(R.string.email));
+                                    link = object.optString(getString(R.string.link));
+                                    imageURL = extractFacebookIcon(id);
+                                    User user = new User();
+                                    user.setIdUser(id);
+                                    user.setLinkAvataUser(imageURL.toString());
+                                    user.setTenUser(name);
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivity.this, "Login  canceled.", Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onError(FacebookException e) {
-                //Log.e(Constanttt.TAG_TAG,e.toString());
-                Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+                                    if(loc!=null)
+                                    {
+                                        user.setX(Double.parseDouble(ref.getString(Constanttt.LOGIN_LATITUDE, null)));
+                                        user.setY(Double.parseDouble(ref.getString(Constanttt.LOGIN_LONGITUDE, null)));
+                                    }
+
+                                    ArrayList<Friend> listFr = new ArrayList<>();
+                                    listFr.add(new Friend("124124124124", "abcd.com", "quoc", 0, 0));
+                                    listFr.add(new Friend("325251512355", "abcd1.com", "tam", 11, 11));
+                                    listFr.add(new Friend("634631621523", "abcd2.com", "nguyen", 23, 12));
+                                    user.setListFriends(listFr);
+                                    user.setListWait(null);
+                                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                                    database.child(Constanttt.USERS).child(id).setValue(user);
+
+
+                                    //luu data facebook vao share
+                                    edit_login = ref.edit();
+                                    edit_login.putString(Constanttt.LOGIN_ID, id);
+                                    edit_login.putString(Constanttt.LOGIN_NAME, name);
+                                    edit_login.putString(Constanttt.LOGIN_LINK_IMG, imageURL.toString());
+                                    edit_login.apply();
+
+                                }
+                            });
+                    Bundle parameters = new Bundle();
+                    parameters.putString(getString(R.string.fields), getString(R.string.fields_name));
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                    startActivity(new Intent(LoginActivity.this, Main_Activity.class));
+                    //dang nhap xong thi finish activity nay
+                    finish();
+                }
+
+                @Override
+                public void onCancel() {
+                    Toast.makeText(LoginActivity.this, "Login  canceled.", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onError(FacebookException e) {
+                    //Log.e(Constanttt.TAG_TAG,e.toString());
+                    Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
 
     //lay url image
     public URL extractFacebookIcon(String id) {
@@ -169,6 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
         LoginManager.getInstance().logInWithReadPermissions(
                 this
                 , Arrays.asList("public_profile", "user_friends", "email"));

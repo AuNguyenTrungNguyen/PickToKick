@@ -11,16 +11,22 @@ public class User implements Serializable {
     private String idUser;
     private String tenUser;
     private String linkAvataUser;
-    private List<String> listFriends;
+    private List<Friend> listFriends;
+    private List<Friend> listWait;
+    private double x;
+    private double y;
 
     public User() {
     }
 
-    public User(String idUser, String tenUser, String linkAvataUser, List<String> listFriends) {
+    public User(String idUser, String tenUser, String linkAvataUser, List<Friend> listFriends, List<Friend> listWait, double x, double y) {
         this.idUser = idUser;
         this.tenUser = tenUser;
         this.linkAvataUser = linkAvataUser;
         this.listFriends = listFriends;
+        this.listWait = listWait;
+        this.x = x;
+        this.y = y;
     }
 
     public String getIdUser() {
@@ -47,11 +53,35 @@ public class User implements Serializable {
         this.linkAvataUser = linkAvataUser;
     }
 
-    public List<String> getListFriends() {
+    public List<Friend> getListFriends() {
         return listFriends;
     }
 
-    public void setListFriends(List<String> listFriends) {
+    public void setListFriends(List<Friend> listFriends) {
         this.listFriends = listFriends;
+    }
+
+    public List<Friend> getListWait() {
+        return listWait;
+    }
+
+    public void setListWait(List<Friend> listWait) {
+        this.listWait = listWait;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }

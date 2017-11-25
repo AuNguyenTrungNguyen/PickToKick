@@ -53,14 +53,17 @@ import picktokick.devfest.picktokick.objects.Match;
 import picktokick.devfest.picktokick.objects.Yard;
 
 public class Main_Activity extends AppCompatActivity implements View.OnClickListener {
-    int soluongYard;
-    ArrayList<Yard> listYard;
-    ArrayList<String> listNameYard;
-    ArrayAdapter<String> adapteryard;
-    Date dateFinish;
-    Date hourFinish;
-    DatabaseReference database;
-    TextView txtTime, txtDate, txtTimeketthuc;
+    BottomNavigationView navigation;
+    private int mMenuId;
+    private int soluongYard;
+    private String myId;
+    private ArrayList<Yard> listYard;
+    private ArrayList<String> listNameYard;
+    private ArrayAdapter<String> adapteryard;
+    private Date dateFinish;
+    private Date hourFinish;
+    private DatabaseReference database;
+    private TextView txtTime, txtDate, txtTimeketthuc;
     private FragmentTransaction ft;
     private FragmentManager fm;
     private Dialog dialog;
@@ -76,18 +79,19 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_thoitiet:
                     getSupportActionBar().setTitle("Thời tiết");
                     ft = fm.beginTransaction();
                     ft.replace(R.id.container_frame, new Fragment_ThoiTiet()).commit();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_home:
                     getSupportActionBar().setTitle("Trang chủ");
                     ft = fm.beginTransaction();
                     ft.replace(R.id.container_frame, new Fragment_Home()).commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_about:
                     getSupportActionBar().setTitle("Thông tin ứng dụng");
                     ft = fm.beginTransaction();
                     ft.replace(R.id.container_frame, new Fragment_ThongTin()).commit();
@@ -102,6 +106,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
         database = FirebaseDatabase.getInstance().getReference();
+
         init();
 
     }
@@ -155,8 +160,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         });
 
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
         getSupportActionBar().setTitle("Trang chủ");
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -170,6 +176,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                         + "\n" + ref.getString(Constanttt.LOGIN_LATITUDE, null)
                         + "\n" + ref.getString(Constanttt.LOGIN_LONGITUDE, null)
         );
+        myId=ref.getString(Constanttt.LOGIN_ID, null);
+
+
     }
 
 
@@ -283,7 +292,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     txtTime.setText(i + ":" + i1);
 
                 } else {
-                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 2))) {
+                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 1))) {
                         Toast.makeText(Main_Activity.this, "Gio ket thuc khong the nho hon gio bat dau!", Toast.LENGTH_SHORT).show();
                     } else {
                         txtTimeketthuc.setText(i + ":" + i1);
@@ -317,6 +326,8 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         //thời gian của trận
         Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
         ArrayList<String> listIdMem = new ArrayList<>();
+
+        listIdMem.add(myId);
         listIdMem.add("111111111111");
         listIdMem.add("222222222222");
         listIdMem.add("333333333333");

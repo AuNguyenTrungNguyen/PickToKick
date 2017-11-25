@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import picktokick.devfest.picktokick.R;
@@ -29,7 +27,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     private List<Match> listData = new ArrayList<>();
     private Context context;
-
+    private String id;
     public AdapterShowMatch(List<Match> listData, Context context) {
         this.listData = listData;
         this.context = context;
@@ -56,11 +54,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
         if(match != null){
             //lấy thông tin
             String nameOfHost = listData.get(position).getNameOfPoster();
-            String timeString = listData.get(position).getThoigian();
-            long value = Long.parseLong(timeString);
-            Date date =new Date(value);
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String time = df.format(date);
+            String time = listData.get(position).getThoigian();
             String address = listData.get(position).getAddressMatch();
             String type = listData.get(position).getTypeOfMatch();
             String info = "";
@@ -76,15 +70,17 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             String description = listData.get(position).getDescription();
             String url = listData.get(position).getUrlOfMatch();
 
+
+
             holder.txtNameOfHost.setText(nameOfHost);
             holder.txtTime.setText(time);
             holder.txtAddress.setText(address);
-            holder.txtType.setText("Loại sân: " + type);
-            holder.txtInfoMember.setText("Thành viên: " + info);
-            holder.txtDescription.setText("Mô tả: " + description);
+            holder.txtType.setText(type);
+            holder.txtInfoMember.setText(info);
+            holder.txtDescription.setText(description);
 
             Glide.with(context).load(url).into(holder.imgShowMatch);
-
+           // if(getIDID(id).equals())
             holder.btnAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -130,7 +126,11 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
         return listData.size();
     }
 
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    public String getIDID(String IDID) {
+        return IDID;
+    }
+
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameOfHost, txtTime, txtAddress, txtType, txtInfoMember, txtDescription;
         ImageView imgShowMatch;
         Button btnAccept, btnShowInfo, btnChat;

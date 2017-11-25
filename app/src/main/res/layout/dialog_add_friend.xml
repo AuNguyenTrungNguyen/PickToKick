@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:text="Nhập tên người bạn cần tìm,Muốn chính xác hãy xem ID người ấy mà nhập vào ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/edtInputAddFr"
+        android:hint="Nhập 4728785278578 hoặc Huỳnh Quốc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnCancelAddFr"
+            android:text="hủy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnOkAddFr"
+            android:text="Ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnXemAvata"
+            android:text="xem thử"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txtXemThuName"
+        android:gravity="center_horizontal"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/imgXemThu"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="@dimen/value192"
+        android:layout_height="@dimen/value192" />
+</LinearLayout>

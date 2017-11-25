@@ -7,28 +7,35 @@ import java.io.Serializable;
  */
 
 public class Friend implements Serializable {
-    private String ID;
+    private String id;
     private String nameFr;
     private String link;
     private double x;
     private double y;
+
     public Friend() {
     }
 
     public Friend(String ID, String nameFr, String link, double x, double y) {
-        this.ID = ID;
+        this.id = ID;
         this.nameFr = nameFr;
         this.link = link;
         this.x = x;
         this.y = y;
     }
 
+    public Friend(String ID, String link, String nameFr) {
+        this.id = ID;
+        this.nameFr = nameFr;
+        this.link = link;
+    }
+
     public String getID() {
-        return ID;
+        return id;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.id = ID;
     }
 
     public String getNameFr() {

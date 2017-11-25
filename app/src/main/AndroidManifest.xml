@@ -55,6 +55,9 @@
         <activity android:name=".activitys.ChatActivity">
 
         </activity>
+        <activity android:name=".activitys.ShowListAddFriend">
+
+        </activity>
     </application>
 
 </manifest>

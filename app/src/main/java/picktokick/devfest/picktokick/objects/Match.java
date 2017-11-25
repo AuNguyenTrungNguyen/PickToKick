@@ -7,7 +7,7 @@ import java.util.List;
  * Created by quocb14005xx on 11/24/2017.
  */
 
-public class Match implements Serializable {
+public class Match implements Serializable{
     private String idMatch;
     private String addressMatch;
     private String idPoster;
@@ -124,4 +124,10 @@ public class Match implements Serializable {
     public void setyMatch(double yMatch) {
         this.yMatch = yMatch;
     }
+
+   /* @Override
+    public int compareTo(@NonNull Match match) {
+        int compareQuantity = (int)Double.parseDouble((match).getThoigian());
+        return (int)Double.parseDouble(this.getThoigian()) - compareQuantity;
+    }*/
 }

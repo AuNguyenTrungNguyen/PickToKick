@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import picktokick.devfest.picktokick.R;
 import picktokick.devfest.picktokick.adapter.AdapterShowMatch;
@@ -62,6 +64,12 @@ public class Fragment_Home extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Match match = dataSnapshot.getValue(Match.class);
                 adapterShowMatch.addItem(listMatch.size(), match);
+                Collections.sort(listMatch, new Comparator<Match>() {
+                    @Override
+                    public int compare(Match c1, Match c2) {
+                        return Double.compare(Double.parseDouble(c1.getThoigian()), Double.parseDouble(c2.getThoigian()));
+                    }
+                });
                 adapterShowMatch.notifyDataSetChanged();
             }
 

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -51,21 +50,18 @@ import picktokick.devfest.picktokick.fragment.Fragment_ThoiTiet;
 import picktokick.devfest.picktokick.fragment.Fragment_ThongTin;
 import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Match;
+import picktokick.devfest.picktokick.objects.Member;
 import picktokick.devfest.picktokick.objects.Yard;
-import picktokick.devfest.picktokick.service.GPSTracker;
 
 public class Main_Activity extends AppCompatActivity implements View.OnClickListener {
-    BottomNavigationView navigation;
-    private int mMenuId;
-    private int soluongYard;
-    private String myId;
-    private ArrayList<Yard> listYard;
-    private ArrayList<String> listNameYard;
-    private ArrayAdapter<String> adapteryard;
-    private Date dateFinish;
-    private Date hourFinish;
-    private DatabaseReference database;
-    private TextView txtTime, txtDate, txtTimeketthuc;
+    int soluongYard;
+    ArrayList<Yard> listYard;
+    ArrayList<String> listNameYard;
+    ArrayAdapter<String> adapteryard;
+    Date dateFinish;
+    Date hourFinish;
+    DatabaseReference database;
+    TextView txtTime, txtDate, txtTimeketthuc;
     private FragmentTransaction ft;
     private FragmentManager fm;
     private Dialog dialog;
@@ -76,13 +72,11 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
     private ImageView imgmatch;
     private RadioButton rd55, rd77, rd1111;
     private Calendar today;
-    Location loc;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             switch (item.getItemId()) {
                 case R.id.navigation_thoitiet:
                     getSupportActionBar().setTitle("Thời tiết");
@@ -109,10 +103,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
         database = FirebaseDatabase.getInstance().getReference();
-
-        GPSTracker gpsTracker = new GPSTracker(this);
-        loc = gpsTracker.getLocation();
-
         init();
 
     }
@@ -159,7 +149,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     listNameYard.add(listYard.get(i).getTenSan() + "-" + listYard.get(i).getDiaChiSan());
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -167,9 +156,8 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         });
 
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
         getSupportActionBar().setTitle("Trang chủ");
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -183,22 +171,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                         + "\n" + ref.getString(Constanttt.LOGIN_LATITUDE, null)
                         + "\n" + ref.getString(Constanttt.LOGIN_LONGITUDE, null)
         );
-
-
-
-
-
-        Log.e(Constanttt.TAG_APP,loc.toString());
-
-
-        database.child(Constanttt.USERS).child(ref.getString(Constanttt.LOGIN_ID, null)).child("x").setValue(loc.getLatitude());
-        database.child(Constanttt.USERS).child(ref.getString(Constanttt.LOGIN_ID, null)).child("y").setValue(loc.getLongitude());
-
-
-
-        myId = ref.getString(Constanttt.LOGIN_ID, null);
-
-
     }
 
 
@@ -312,7 +284,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     txtTime.setText(i + ":" + i1);
 
                 } else {
-                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 1))) {
+                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 2))) {
                         Toast.makeText(Main_Activity.this, "Gio ket thuc khong the nho hon gio bat dau!", Toast.LENGTH_SHORT).show();
                     } else {
                         txtTimeketthuc.setText(i + ":" + i1);
@@ -327,8 +299,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
     private void XuLyCreate_Match() {
 
+        String idMatch = getDateTimeSystem();
         Match tranbanh = new Match();
-        tranbanh.setIdMatch(getDateTimeSystem());//id trận
+        tranbanh.setIdMatch(idMatch);//id trận
         tranbanh.setAddressMatch(autoCompleteTextViewMatch.getText().toString());//địa chỉ trạn
         tranbanh.setIdPoster(getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE).getString(Constanttt.LOGIN_ID, null));
         tranbanh.setNameOfPoster(edtName.getText().toString());
@@ -340,18 +313,21 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
             tranbanh.setTypeOfMatch("11vs11");
         }
 
-
-        tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(), txtTime.getText().toString())));
+        tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
         //thời gian của trận
-        Log.e(Constanttt.TAG_APP, "thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(), txtTime.getText().toString())));
-        ArrayList<String> listIdMem = new ArrayList<>();
+        Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
+        ArrayList<Member> listMem = new ArrayList<>();
 
-        listIdMem.add(myId);
-        listIdMem.add("111111111111");
-        listIdMem.add("222222222222");
-        listIdMem.add("333333333333");
-        listIdMem.add("444444444444");
-        tranbanh.setListMember(listIdMem);//lít thanh viên
+        //chinh cho nay lai
+        SharedPreferences preferences = this.getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE);
+        Member member = new Member();
+        member.setIdMember(preferences.getString(Constanttt.LOGIN_ID, ""));
+        member.setNameOfMember(preferences.getString(Constanttt.LOGIN_NAME, ""));
+        member.setUrlMember(preferences.getString(Constanttt.LOGIN_LINK_IMG, ""));
+        listMem.add(member);
+        //toi day
+
+        tranbanh.setListMember(listMem);//lít thanh viên
 
         tranbanh.setDescription(edtMota.getText().toString());// mo ta
 
@@ -366,7 +342,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Đang tạo trận banh....");
         progressDialog.show();
-        database.child(Constanttt.MATCHs).child(getDateTimeSystem()).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(Constanttt.MATCHs+"Test").child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();
@@ -376,20 +352,20 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private long ChuyenDateTime2Long(String date, String time) {
-        long r = 0;
+    private long ChuyenDateTime2Long(String date,String time)
+    {
+       long r=0;
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm");
         try {
             Date dt = df.parse(date + " " + time);
             Calendar ca = Calendar.getInstance();
             ca.setTime(dt);
-            r = ca.getTimeInMillis();
+            r=ca.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return r;
     }
-
     //hàm lấy ngày giờ hẽ thống để làm id bài đăng
     private String getDateTimeSystem() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");

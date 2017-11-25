@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
@@ -126,23 +127,31 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
         List<Member> list = match.getListMember();
 
-        for(int i = 0; i < list.size(); i++){
+        boolean isExist = false;
 
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getIdMember().equals(idMember)){
+                isExist = true;
+                break;
+            }
         }
 
-        String nameOfMember = preferences.getString(Constanttt.LOGIN_NAME, "");
-        String urlMember = preferences.getString(Constanttt.LOGIN_LINK_IMG, "");
+        if (isExist) {
+            Toast.makeText(context, "Bạn đã có trong nhóm này rồi", Toast.LENGTH_SHORT).show();
+        }else{
+            String nameOfMember = preferences.getString(Constanttt.LOGIN_NAME, "");
+            String urlMember = preferences.getString(Constanttt.LOGIN_LINK_IMG, "");
 
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(Constanttt.MATCHs+"Test");
-        Member member = new Member();
-        member.setIdMember(idMember);
-        member.setNameOfMember(nameOfMember);
-        member.setUrlMember(urlMember);
+            DatabaseReference databaseReference;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(Constanttt.MATCHs+"Test");
+            Member member = new Member();
+            member.setIdMember(idMember);
+            member.setNameOfMember(nameOfMember);
+            member.setUrlMember(urlMember);
 
-        int count = match.getListMember().size();
-        databaseReference.child(match.getIdMatch()).child("listMember").child(count+"").setValue(member);
-
+            int count = match.getListMember().size();
+            databaseReference.child(match.getIdMatch()).child("listMember").child(count+"").setValue(member);
+        }
     }
 
     @Override

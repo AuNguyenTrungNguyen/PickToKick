@@ -2,6 +2,8 @@ package picktokick.devfest.picktokick.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,6 +31,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import picktokick.devfest.picktokick.R;
+import picktokick.devfest.picktokick.activitys.LoginActivity;
 import picktokick.devfest.picktokick.adapter.ProfileAdapter;
 import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Friend;
@@ -89,7 +97,18 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
         name = (TextView) view.findViewById(R.id.txtName);
         anhDaiDien = (CircleImageView) view.findViewById(R.id.imgAnhDaiDien);
         btnLogout = (Button) view.findViewById(R.id.btnLogOut);
-
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences ref =getContext().getSharedPreferences(Constanttt.SHARE_REF_LOGIN,Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = ref.edit();
+                edit.clear();
+                edit.commit();
+                disconnectFromFacebook();
+                getActivity().startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
         listProfile = new ArrayList<>();
         listProfile.add("Thêm bạn bè");
         listProfile.add("Lời mời kết bạn");
@@ -186,7 +205,7 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                                 .child(edtInputAddFr.getText().toString())
                                 .child(Constanttt.USERS_listWait)
                                 .child("FRIENDS").push().setValue(new Friend(myID, link, name, Double.parseDouble(x), Double.parseDouble(y)));
-
+                        ///////////////////////////
                     }
                 });
 
@@ -211,5 +230,20 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                 break;
         }
     }
+    public void disconnectFromFacebook() {
 
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
+    }
 }

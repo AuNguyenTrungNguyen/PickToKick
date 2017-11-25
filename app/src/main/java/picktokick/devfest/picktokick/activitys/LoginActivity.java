@@ -22,6 +22,8 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -30,6 +32,7 @@ import java.util.Arrays;
 
 import picktokick.devfest.picktokick.R;
 import picktokick.devfest.picktokick.objects.Constanttt;
+import picktokick.devfest.picktokick.objects.User;
 import picktokick.devfest.picktokick.service.GPSTracker;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -103,7 +106,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Log.e(Constanttt.TAG_TAG, email);
                                 Log.e(Constanttt.TAG_TAG, link);
                                 Log.e(Constanttt.TAG_TAG, imageURL.toString());
-*/
+                                */
+                                DatabaseReference database= FirebaseDatabase.getInstance().getReference();
+                                User user = new User();
+                                user.setIdUser(id);
+                                user.setLinkAvataUser(imageURL.toString());
+                                user.setTenUser(name);
+                                user.setListFriends(null);
+                                database.child(Constanttt.USERS).child(id).setValue(user);
                                 //luu data facebook vao share
                                 edit_login.putString(Constanttt.LOGIN_ID, id);
                                 edit_login.putString(Constanttt.LOGIN_NAME, name);

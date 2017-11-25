@@ -37,6 +37,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -297,8 +299,8 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
     private void XuLyCreate_Match() {
 
         Match tranbanh = new Match();
-        tranbanh.setIdMatch(getDateTimeSystem());
-        tranbanh.setAddressMatch(autoCompleteTextViewMatch.getText().toString());
+        tranbanh.setIdMatch(getDateTimeSystem());//id trận
+        tranbanh.setAddressMatch(autoCompleteTextViewMatch.getText().toString());//địa chỉ trạn
         tranbanh.setIdPoster(getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE).getString(Constanttt.LOGIN_ID, null));
         tranbanh.setNameOfPoster(edtName.getText().toString());
         if (rd55.isChecked()) {
@@ -310,35 +312,54 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         }
 
 
+
+        tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
+        //thời gian của trận
+        Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
         ArrayList<String> listIdMem = new ArrayList<>();
         listIdMem.add("111111111111");
         listIdMem.add("222222222222");
         listIdMem.add("333333333333");
         listIdMem.add("444444444444");
-        tranbanh.setListMember(listIdMem);
-        tranbanh.setDescription(edtMota.getText().toString());
-        for (int i = 0; i < listYard.size(); i++) {
-            if (TextUtils.equals(autoCompleteTextViewMatch.getText().toString(), listYard.get(i).getTenSan() + "-" + listYard.get(i).getTenSan())) {
+        tranbanh.setListMember(listIdMem);//lít thanh viên
 
+        tranbanh.setDescription(edtMota.getText().toString());// mo ta
+
+        for (int i = 0; i < listYard.size(); i++) {
+            if (TextUtils.equals(autoCompleteTextViewMatch.getText().toString(), listYard.get(i).getTenSan() + "-" + listYard.get(i).getDiaChiSan())) {
                 //neu text trong auto complete == text data firebase thi set x,y,url img theo Yard do
                 tranbanh.setxMatch(listYard.get(i).getX());
                 tranbanh.setyMatch(listYard.get(i).getY());
-                Log.e(Constanttt.TAG_APP,listYard.get(i).getListHinhAnh().get(0));
                 tranbanh.setUrlOfMatch(listYard.get(i).getListHinhAnh().get(0));
-
             }
         }
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Đang tạo trận banh....");
+        progressDialog.show();
         database.child(Constanttt.MATCHs).child(getDateTimeSystem()).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(Main_Activity.this, "Create Match succesful!", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-
+    private long ChuyenDateTime2Long(String date,String time)
+    {
+       long r=0;
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+        try {
+            Date dt = df.parse(date + " " + time);
+            Calendar ca = Calendar.getInstance();
+            ca.setTime(dt);
+            r=ca.getTimeInMillis();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return r;
+    }
     //hàm lấy ngày giờ hẽ thống để làm id bài đăng
     private String getDateTimeSystem() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -346,5 +367,4 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         String strDate = sdfDate.format(now);
         return strDate + "-" + System.currentTimeMillis();
     }
-
 }

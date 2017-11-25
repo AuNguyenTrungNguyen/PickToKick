@@ -284,7 +284,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     txtTime.setText(i + ":" + i1);
 
                 } else {
-                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 2))) {
+                    if (i < Integer.parseInt(txtTime.getText().toString().substring(0, 1))) {
                         Toast.makeText(Main_Activity.this, "Gio ket thuc khong the nho hon gio bat dau!", Toast.LENGTH_SHORT).show();
                     } else {
                         txtTimeketthuc.setText(i + ":" + i1);
@@ -326,7 +326,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         member.setUrlMember(preferences.getString(Constanttt.LOGIN_LINK_IMG, ""));
         listMem.add(member);
         //toi day
-
+        tranbanh.setUrlPoster(preferences.getString(Constanttt.LOGIN_LINK_IMG,null));
         tranbanh.setListMember(listMem);//lít thanh viên
 
         tranbanh.setDescription(edtMota.getText().toString());// mo ta
@@ -342,7 +342,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Đang tạo trận banh....");
         progressDialog.show();
-        database.child(Constanttt.MATCHs+"Test").child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(Constanttt.MATCHs).child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();

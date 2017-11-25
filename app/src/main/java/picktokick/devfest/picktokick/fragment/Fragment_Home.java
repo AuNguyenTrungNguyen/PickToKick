@@ -58,7 +58,7 @@ public class Fragment_Home extends Fragment {
     }
 
     private void loadData(){
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(Constanttt.MATCHs+"Test");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(Constanttt.MATCHs);
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

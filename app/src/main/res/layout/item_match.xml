@@ -24,6 +24,7 @@
             android:padding="@dimen/value8">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAnhDaiDienSmall"
                 android:layout_width="@dimen/value48"
                 android:layout_height="@dimen/value48"
                 android:layout_gravity="center_horizontal"

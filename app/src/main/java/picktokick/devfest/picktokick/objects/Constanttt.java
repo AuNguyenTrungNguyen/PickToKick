@@ -10,6 +10,9 @@ public class Constanttt {
     public static final String MATCHs ="MATCHs" ;
     public static final String FOOTBALL_YARD ="FOOTBALL_YARD" ;
     public static final String USERS ="USERS" ;
+    public static final String USERS_listFriends ="listFriends" ;
+    public static final String USERS_listWait ="listWait" ;
+
 
 
 

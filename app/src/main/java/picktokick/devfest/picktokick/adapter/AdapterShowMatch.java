@@ -25,7 +25,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     private List<Match> listData = new ArrayList<>();
     private Context context;
-
+    private String id;
     public AdapterShowMatch(List<Match> listData, Context context) {
         this.listData = listData;
         this.context = context;
@@ -68,6 +68,8 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             String description = listData.get(position).getDescription();
             String url = listData.get(position).getUrlOfMatch();
 
+
+
             holder.txtNameOfHost.setText(nameOfHost);
             holder.txtTime.setText(time);
             holder.txtAddress.setText(address);
@@ -76,7 +78,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             holder.txtDescription.setText(description);
 
             Glide.with(context).load(url).into(holder.imgShowMatch);
-
+           // if(getIDID(id).equals())
             holder.btnAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -115,6 +117,10 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
     @Override
     public int getItemCount() {
         return listData.size();
+    }
+
+    public String getIDID(String IDID) {
+        return IDID;
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -51,6 +52,7 @@ import picktokick.devfest.picktokick.fragment.Fragment_ThongTin;
 import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Match;
 import picktokick.devfest.picktokick.objects.Yard;
+import picktokick.devfest.picktokick.service.GPSTracker;
 
 public class Main_Activity extends AppCompatActivity implements View.OnClickListener {
     BottomNavigationView navigation;
@@ -74,6 +76,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
     private ImageView imgmatch;
     private RadioButton rd55, rd77, rd1111;
     private Calendar today;
+    Location loc;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -106,6 +109,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
         database = FirebaseDatabase.getInstance().getReference();
+
+        GPSTracker gpsTracker = new GPSTracker(this);
+        loc = gpsTracker.getLocation();
 
         init();
 
@@ -153,6 +159,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                     listNameYard.add(listYard.get(i).getTenSan() + "-" + listYard.get(i).getDiaChiSan());
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -176,7 +183,20 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
                         + "\n" + ref.getString(Constanttt.LOGIN_LATITUDE, null)
                         + "\n" + ref.getString(Constanttt.LOGIN_LONGITUDE, null)
         );
-        myId=ref.getString(Constanttt.LOGIN_ID, null);
+
+
+
+
+
+        Log.e(Constanttt.TAG_APP,loc.toString());
+
+
+        database.child(Constanttt.USERS).child(ref.getString(Constanttt.LOGIN_ID, null)).child("x").setValue(loc.getLatitude());
+        database.child(Constanttt.USERS).child(ref.getString(Constanttt.LOGIN_ID, null)).child("y").setValue(loc.getLongitude());
+
+
+
+        myId = ref.getString(Constanttt.LOGIN_ID, null);
 
 
     }
@@ -321,10 +341,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         }
 
 
-
-        tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
+        tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(), txtTime.getText().toString())));
         //thời gian của trận
-        Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
+        Log.e(Constanttt.TAG_APP, "thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(), txtTime.getText().toString())));
         ArrayList<String> listIdMem = new ArrayList<>();
 
         listIdMem.add(myId);
@@ -357,20 +376,20 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private long ChuyenDateTime2Long(String date,String time)
-    {
-       long r=0;
+    private long ChuyenDateTime2Long(String date, String time) {
+        long r = 0;
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm");
         try {
             Date dt = df.parse(date + " " + time);
             Calendar ca = Calendar.getInstance();
             ca.setTime(dt);
-            r=ca.getTimeInMillis();
+            r = ca.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return r;
     }
+
     //hàm lấy ngày giờ hẽ thống để làm id bài đăng
     private String getDateTimeSystem() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");

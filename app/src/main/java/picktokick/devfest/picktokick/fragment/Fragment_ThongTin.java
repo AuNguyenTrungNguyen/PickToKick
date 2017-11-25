@@ -186,7 +186,7 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                                 .child(edtInputAddFr.getText().toString())
                                 .child(Constanttt.USERS_listWait)
                                 .child("FRIENDS").push().setValue(new Friend(myID, link, name, Double.parseDouble(x), Double.parseDouble(y)));
-
+                        ///////////////////////////
                     }
                 });
 

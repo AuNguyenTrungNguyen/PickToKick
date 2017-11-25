@@ -136,16 +136,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     edit_login.putString(Constanttt.LOGIN_NAME, name);
                                     edit_login.putString(Constanttt.LOGIN_LINK_IMG, imageURL.toString());
                                     edit_login.apply();
-
+                                    startActivity(new Intent(LoginActivity.this, Main_Activity.class).putExtra("idid",id));
+                                    //dang nhap xong thi finish activity nay
+                                    finish();
                                 }
                             });
                     Bundle parameters = new Bundle();
                     parameters.putString(getString(R.string.fields), getString(R.string.fields_name));
                     request.setParameters(parameters);
                     request.executeAsync();
-                    startActivity(new Intent(LoginActivity.this, Main_Activity.class));
-                    //dang nhap xong thi finish activity nay
-                    finish();
+
                 }
 
                 @Override

@@ -18,8 +18,8 @@
             android:layout_width="@dimen/value192"
             android:layout_height="@dimen/value192"
             android:layout_gravity="center_horizontal"
-            android:src="@color/colorAccent"
-            app:civ_border_color="#FF000000"
+            android:src="@color/white_backround"
+            app:civ_border_color="@color/transparent100"
             app:civ_border_width="@dimen/value5" />
 
         <TextView
@@ -42,7 +42,6 @@
             android:layout_marginTop="@dimen/value10"
             android:paddingLeft="@dimen/value25"
             android:paddingRight="@dimen/value25"
-
             android:id="@+id/btnLogOut"
             android:text="Đăng Xuất"
             android:layout_gravity="center_horizontal"

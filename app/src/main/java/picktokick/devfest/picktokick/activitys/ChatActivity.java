@@ -2,13 +2,13 @@ package picktokick.devfest.picktokick.activitys;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -29,7 +29,7 @@ import picktokick.devfest.picktokick.objects.Member;
 import picktokick.devfest.picktokick.objects.MessageObj;
 
 public class ChatActivity extends AppCompatActivity {
-    private FloatingActionButton btnSend;
+    private ImageView btnSend;
     private EditText edtContentMessage;
     private TextView txtChatConversation;
     private String roomName;

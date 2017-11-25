@@ -72,8 +72,8 @@ public class AdapterAddFriend extends RecyclerView.Adapter<AdapterAddFriend.Recy
         Log.e("logg", friendID);
         DatabaseReference data = FirebaseDatabase.getInstance().getReference();
         data.child(Constanttt.USERS).child(myID).child(Constanttt.USERS_listWait).child(friendID).removeValue();
-        data.child(Constanttt.USERS).child(myID).child(Constanttt.USERS_listFriends).setValue(friend);
-        data.child(Constanttt.USERS).child(friendID).child(Constanttt.USERS_listFriends)
+        data.child(Constanttt.USERS).child(myID).child(Constanttt.USERS_listFriends).child(friendID).setValue(friend);
+        data.child(Constanttt.USERS).child(friendID).child(Constanttt.USERS_listFriends).child(myID)
                 .setValue(new Friend(myID, link, name)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

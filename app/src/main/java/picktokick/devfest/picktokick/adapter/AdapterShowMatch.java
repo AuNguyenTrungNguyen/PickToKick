@@ -117,7 +117,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
         return listData.size();
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameOfHost, txtTime, txtAddress, txtType, txtInfoMember, txtDescription;
         ImageView imgShowMatch;
         Button btnAccept, btnShowInfo, btnChat;

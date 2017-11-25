@@ -167,8 +167,7 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameOfHost, txtTime, txtAddress, txtType, txtInfoMember, txtDescription;
-        ImageView imgShowMatch;
-        Button btnAccept, btnShowInfo, btnChat;
+        ImageView imgShowMatch,btnAccept, btnShowInfo, btnChat;
 
         public RecyclerViewHolder(final View itemView) {
 

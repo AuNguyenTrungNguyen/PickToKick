@@ -313,8 +313,6 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
             tranbanh.setTypeOfMatch("11vs11");
         }
 
-
-
         tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
         //thời gian của trận
         Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));

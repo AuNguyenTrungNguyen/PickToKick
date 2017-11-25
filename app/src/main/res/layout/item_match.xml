@@ -45,11 +45,12 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_gravity="center_horizontal"
             android:background="@color/white"
             android:padding="@dimen/value8"
             android:id="@+id/imgShowMatch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/value325"
             android:layout_weight="1"
             android:src="@color/white_backround" />
 

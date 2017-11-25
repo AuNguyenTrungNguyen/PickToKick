@@ -50,14 +50,10 @@
         </activity>
         <activity
             android:name=".activitys.Main_Activity"
-            android:label="@string/title_activity_main_" >
-        </activity>
-        <activity android:name=".activitys.ChatActivity">
-
-        </activity>
-        <activity android:name=".activitys.ShowListAddFriend">
-
-        </activity>
+            android:label="@string/title_activity_main_"></activity>
+        <activity android:name=".activitys.ChatActivity"></activity>
+        <activity android:name=".activitys.ShowListAddFriend"></activity>
+        <activity android:name=".activitys.ListFriendActivity"></activity>
     </application>
 
 </manifest>

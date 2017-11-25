@@ -18,6 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,6 +30,8 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import picktokick.devfest.picktokick.R;
+import picktokick.devfest.picktokick.activitys.ListFriendActivity;
+import picktokick.devfest.picktokick.activitys.LoginActivity;
 import picktokick.devfest.picktokick.activitys.ShowListAddFriend;
 import picktokick.devfest.picktokick.adapter.ProfileAdapter;
 import picktokick.devfest.picktokick.objects.Constanttt;
@@ -48,39 +55,7 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
     private CircleImageView anhDaiDien;
     private Button btnLogout;
 
-   /* private String[] getUserByID(final String id) {
-        database.child(Constanttt.USERS).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user.getIdUser().equals(id)) {
-                    mname = user.getTenUser();
-                    linkImg = user.getLinkAvataUser();
-                }
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return new String[]{mname, linkImg};
-    }*/
 
     @Nullable
     @Override
@@ -91,6 +66,17 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
         name = (TextView) view.findViewById(R.id.txtName);
         anhDaiDien = (CircleImageView) view.findViewById(R.id.imgAnhDaiDien);
         btnLogout = (Button) view.findViewById(R.id.btnLogOut);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().getSharedPreferences(Constanttt.SHARE_REF_LOGIN,Context.MODE_PRIVATE)
+                        .edit().clear().commit();
+                disconnectFromFacebook();
+                getActivity().startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
+
 
         listProfile = new ArrayList<>();
         listProfile.add("Thêm bạn bè");
@@ -127,7 +113,7 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                 xemLoiMoiKetBan();
                 break;
             case 2:
-                //danh sách bạn bè
+                xemDanhSachBanBe();
                 break;
             case 3:
                 Dialog dialog2 = new Dialog(getContext());
@@ -142,6 +128,11 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                 dialog3.show();
                 break;
         }
+    }
+
+    private void xemDanhSachBanBe()
+    {
+        startActivity(new Intent(getContext(), ListFriendActivity.class));
     }
 
     private void xemLoiMoiKetBan() {
@@ -215,5 +206,21 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
 
             }
         });
+    }
+    public void disconnectFromFacebook() {
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
     }
 }

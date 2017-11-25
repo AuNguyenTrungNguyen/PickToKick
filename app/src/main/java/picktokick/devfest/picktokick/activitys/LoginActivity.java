@@ -121,10 +121,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     }
 
                                     ArrayList<Friend> listFr = new ArrayList<>();
-                                    listFr.add(new Friend("124124124124", "abcd.com", "quoc", 0, 0));
-                                    listFr.add(new Friend("325251512355", "abcd1.com", "tam", 11, 11));
-                                    listFr.add(new Friend("634631621523", "abcd2.com", "nguyen", 23, 12));
-                                    user.setListFriends(listFr);
+
+                                    user.setListFriends(null);
                                     user.setListWait(null);
                                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
                                     database.child(Constanttt.USERS).child(id).setValue(user);

@@ -58,11 +58,11 @@ public class Fragment_Home extends Fragment {
     }
 
     private void loadData(){
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(Constanttt.MATCHs).addChildEventListener(new ChildEventListener() {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(Constanttt.MATCHs+"Test");
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Match match = dataSnapshot.getValue(Match.class);
+                Match match = (Match) dataSnapshot.getValue(Match.class);
                 adapterShowMatch.addItem(listMatch.size(), match);
                 Collections.sort(listMatch, new Comparator<Match>() {
                     @Override
@@ -75,7 +75,16 @@ public class Fragment_Home extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                listMatch.clear();
+                Match match = (Match) dataSnapshot.getValue(Match.class);
+                adapterShowMatch.addItem(listMatch.size(), match);
+                Collections.sort(listMatch, new Comparator<Match>() {
+                    @Override
+                    public int compare(Match c1, Match c2) {
+                        return Double.compare(Double.parseDouble(c1.getThoigian()), Double.parseDouble(c2.getThoigian()));
+                    }
+                });
+                adapterShowMatch.notifyDataSetChanged();
             }
 
             @Override

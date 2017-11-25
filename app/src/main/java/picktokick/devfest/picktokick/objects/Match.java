@@ -14,7 +14,7 @@ public class Match implements Serializable{
     private String nameOfPoster;
     private String typeOfMatch;
     private String thoigian;
-    private List<String> listMember;
+    private List<Member> listMember;
     private String description;
     private String urlOfMatch;
     private double xMatch;
@@ -23,7 +23,7 @@ public class Match implements Serializable{
     public Match() {
     }
 
-    public Match(String idMatch, String addressMatch, String idPoster, String nameOfPoster, String typeOfMatch, String thoigian, List<String> listMember, String description, String urlOfMatch, double xMatch, double yMatch) {
+    public Match(String idMatch, String addressMatch, String idPoster, String nameOfPoster, String typeOfMatch, String thoigian, List<Member> listMember, String description, String urlOfMatch, double xMatch, double yMatch) {
         this.idMatch = idMatch;
         this.addressMatch = addressMatch;
         this.idPoster = idPoster;
@@ -85,11 +85,11 @@ public class Match implements Serializable{
         this.thoigian = thoigian;
     }
 
-    public List<String> getListMember() {
+    public List<Member> getListMember() {
         return listMember;
     }
 
-    public void setListMember(List<String> listMember) {
+    public void setListMember(List<Member> listMember) {
         this.listMember = listMember;
     }
 

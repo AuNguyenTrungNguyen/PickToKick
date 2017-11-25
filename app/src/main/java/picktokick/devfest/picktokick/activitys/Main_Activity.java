@@ -50,6 +50,7 @@ import picktokick.devfest.picktokick.fragment.Fragment_ThoiTiet;
 import picktokick.devfest.picktokick.fragment.Fragment_ThongTin;
 import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Match;
+import picktokick.devfest.picktokick.objects.Member;
 import picktokick.devfest.picktokick.objects.Yard;
 
 public class Main_Activity extends AppCompatActivity implements View.OnClickListener {
@@ -77,17 +78,17 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_thoitiet:
                     getSupportActionBar().setTitle("Thời tiết");
                     ft = fm.beginTransaction();
                     ft.replace(R.id.container_frame, new Fragment_ThoiTiet()).commit();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_home:
                     getSupportActionBar().setTitle("Trang chủ");
                     ft = fm.beginTransaction();
                     ft.replace(R.id.container_frame, new Fragment_Home()).commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_about:
                     getSupportActionBar().setTitle("Thông tin ứng dụng");
                     ft = fm.beginTransaction();
                     ft.replace(R.id.container_frame, new Fragment_ThongTin()).commit();
@@ -298,8 +299,9 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
 
     private void XuLyCreate_Match() {
 
+        String idMatch = getDateTimeSystem();
         Match tranbanh = new Match();
-        tranbanh.setIdMatch(getDateTimeSystem());//id trận
+        tranbanh.setIdMatch(idMatch);//id trận
         tranbanh.setAddressMatch(autoCompleteTextViewMatch.getText().toString());//địa chỉ trạn
         tranbanh.setIdPoster(getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE).getString(Constanttt.LOGIN_ID, null));
         tranbanh.setNameOfPoster(edtName.getText().toString());
@@ -311,17 +313,21 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
             tranbanh.setTypeOfMatch("11vs11");
         }
 
-
-
         tranbanh.setThoigian(String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
         //thời gian của trận
         Log.e(Constanttt.TAG_APP,"thoi gian match =" + String.valueOf(ChuyenDateTime2Long(txtDate.getText().toString(),txtTime.getText().toString())));
-        ArrayList<String> listIdMem = new ArrayList<>();
-        listIdMem.add("111111111111");
-        listIdMem.add("222222222222");
-        listIdMem.add("333333333333");
-        listIdMem.add("444444444444");
-        tranbanh.setListMember(listIdMem);//lít thanh viên
+        ArrayList<Member> listMem = new ArrayList<>();
+
+        //chinh cho nay lai
+        SharedPreferences preferences = this.getSharedPreferences(Constanttt.SHARE_REF_LOGIN, MODE_PRIVATE);
+        Member member = new Member();
+        member.setIdMember(preferences.getString(Constanttt.LOGIN_ID, ""));
+        member.setNameOfMember(preferences.getString(Constanttt.LOGIN_NAME, ""));
+        member.setUrlMember(preferences.getString(Constanttt.LOGIN_LINK_IMG, ""));
+        listMem.add(member);
+        //toi day
+
+        tranbanh.setListMember(listMem);//lít thanh viên
 
         tranbanh.setDescription(edtMota.getText().toString());// mo ta
 
@@ -336,7 +342,7 @@ public class Main_Activity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Đang tạo trận banh....");
         progressDialog.show();
-        database.child(Constanttt.MATCHs).child(getDateTimeSystem()).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(Constanttt.MATCHs+"Test").child(idMatch).setValue(tranbanh).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();

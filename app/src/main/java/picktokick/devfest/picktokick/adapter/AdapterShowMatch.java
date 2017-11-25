@@ -1,6 +1,7 @@
 package picktokick.devfest.picktokick.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,20 +9,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import picktokick.devfest.picktokick.R;
+import picktokick.devfest.picktokick.objects.Constanttt;
 import picktokick.devfest.picktokick.objects.Match;
+import picktokick.devfest.picktokick.objects.Member;
 
 /**
  * Created by Au Nguyen on 11/24/2017.
  */
 
-public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.RecyclerViewHolder>  {
+public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.RecyclerViewHolder> {
 
     private List<Match> listData = new ArrayList<>();
     private Context context;
@@ -47,21 +55,25 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
 
-        Match match = listData.get(position);
+        final Match match = listData.get(position);
 
-        if(match != null){
+        if (match != null) {
             //lấy thông tin
             String nameOfHost = listData.get(position).getNameOfPoster();
-            String time = listData.get(position).getThoigian();
+            String timeString = listData.get(position).getThoigian();
+            long value = Long.parseLong(timeString);
+            Date date = new Date(value);
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String time = df.format(date);
             String address = listData.get(position).getAddressMatch();
             String type = listData.get(position).getTypeOfMatch();
             String info = "";
-            List<String> listMember = listData.get(position).getListMember();
-            for(int i = 0; i < listMember.size(); i++){
-                info += listMember.get(i);
-                if(i < listMember.size() - 1){
+            List<Member> listMember = listData.get(position).getListMember();
+            for (int i = 1; i < listMember.size(); i++) {
+                info += listMember.get(i).getNameOfMember();
+                if (i < listMember.size() - 1) {
                     info += ", ";
-                }else{
+                } else {
                     info += ".";
                 }
             }
@@ -71,16 +83,16 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
             holder.txtNameOfHost.setText(nameOfHost);
             holder.txtTime.setText(time);
             holder.txtAddress.setText(address);
-            holder.txtType.setText(type);
-            holder.txtInfoMember.setText(info);
-            holder.txtDescription.setText(description);
+            holder.txtType.setText("Loại sân: " + type);
+            holder.txtInfoMember.setText("Thành viên: " + info);
+            holder.txtDescription.setText("Mô tả: " + description);
 
             Glide.with(context).load(url).into(holder.imgShowMatch);
 
             holder.btnAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    accept();
+                    accept(match);
                 }
             });
 
@@ -108,8 +120,38 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     }
 
-    private void accept() {
+    private void accept(Match match) {
 
+        SharedPreferences preferences = context.getSharedPreferences(Constanttt.SHARE_REF_LOGIN, Context.MODE_PRIVATE);
+        String idMember = preferences.getString(Constanttt.LOGIN_ID, "");
+
+        List<Member> list = match.getListMember();
+
+        boolean isExist = false;
+
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getIdMember().equals(idMember)){
+                isExist = true;
+                break;
+            }
+        }
+
+        if (isExist) {
+            Toast.makeText(context, "Bạn đã có trong nhóm này rồi", Toast.LENGTH_SHORT).show();
+        }else{
+            String nameOfMember = preferences.getString(Constanttt.LOGIN_NAME, "");
+            String urlMember = preferences.getString(Constanttt.LOGIN_LINK_IMG, "");
+
+            DatabaseReference databaseReference;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(Constanttt.MATCHs+"Test");
+            Member member = new Member();
+            member.setIdMember(idMember);
+            member.setNameOfMember(nameOfMember);
+            member.setUrlMember(urlMember);
+
+            int count = match.getListMember().size();
+            databaseReference.child(match.getIdMatch()).child("listMember").child(count+"").setValue(member);
+        }
     }
 
     @Override
@@ -119,7 +161,9 @@ public class AdapterShowMatch extends RecyclerView.Adapter<AdapterShowMatch.Recy
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameOfHost, txtTime, txtAddress, txtType, txtInfoMember, txtDescription;
-        ImageView imgShowMatch,btnAccept, btnShowInfo, btnChat;
+        ImageView imgShowMatch;
+        Button btnAccept, btnShowInfo, btnChat;
+
         public RecyclerViewHolder(final View itemView) {
 
             super(itemView);

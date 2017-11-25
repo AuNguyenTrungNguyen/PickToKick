@@ -16,7 +16,7 @@
             android:id="@+id/imgShowMatch"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/value5"
+            android:layout_margin="@dimen/value2"
             android:layout_weight="1" />
 
         <LinearLayout

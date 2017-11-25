@@ -59,10 +59,10 @@ public class Fragment_Home extends Fragment {
 
     private void loadData(){
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(Constanttt.MATCHs).addChildEventListener(new ChildEventListener() {
+        databaseReference.child(Constanttt.MATCHs+"Test").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Match match = dataSnapshot.getValue(Match.class);
+                Match match = (Match) dataSnapshot.getValue(Match.class);
                 adapterShowMatch.addItem(listMatch.size(), match);
                 Collections.sort(listMatch, new Comparator<Match>() {
                     @Override

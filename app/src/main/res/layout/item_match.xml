@@ -119,39 +119,34 @@
             android:gravity="bottom"
             android:orientation="horizontal">
 
-            <ImageView
+            <Button
+                android:drawableStart="@drawable/ic_soccer_orga"
+                android:drawableLeft="@drawable/ic_soccer_orga"
                 android:id="@+id/btnAccept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:padding="@dimen/value4"
-                android:src="@drawable/ic_soccer_white"
-                android:text="Join"
-                android:textAllCaps="false" />
+                android:text="Tham gia"
+                android:textAllCaps="false"
+                android:paddingLeft="@dimen/value60"
+                android:layout_gravity="center"/>
 
-            <ImageView
-                android:id="@+id/btnShowInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/value1"
+            <Button
                 android:layout_marginLeft="@dimen/value1"
-                android:layout_marginRight="@dimen/value1"
                 android:layout_marginStart="@dimen/value1"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:padding="@dimen/value4"
-                android:src="@drawable/ic_more_details_white"
-                android:textAllCaps="false" />
-
-            <ImageView
+                android:drawableStart="@drawable/ic_speech_green"
+                android:drawableLeft="@drawable/ic_speech_green"
+                android:text="Chat nhóm"
                 android:id="@+id/btnChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAllCaps="false"
                 android:background="@color/white"
-                android:padding="@dimen/value4"
-                android:src="@drawable/ic_speech_white" />
+                android:paddingLeft="@dimen/value60"
+                android:layout_gravity="center"
+                />
 
         </LinearLayout>
 

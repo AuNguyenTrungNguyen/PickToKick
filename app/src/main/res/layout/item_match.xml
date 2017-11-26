@@ -53,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/value325"
             android:layout_weight="1"
-            android:src="@color/white_backround" />
+            android:src="@color/white_backround"
+            android:contentDescription="TODO" />
 
 
 
@@ -117,37 +118,58 @@
             android:layout_marginTop="@dimen/value1"
             android:layout_weight="1"
             android:gravity="bottom"
+            android:weightSum="2"
             android:orientation="horizontal">
-
-            <Button
-                android:drawableStart="@drawable/ic_soccer_orga"
-                android:drawableLeft="@drawable/ic_soccer_orga"
-                android:id="@+id/btnAccept"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+            <RelativeLayout
                 android:background="@color/white"
-                android:text="Tham gia"
-                android:textAllCaps="false"
-                android:paddingLeft="@dimen/value60"
-                android:layout_gravity="center"/>
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:background="@color/transparent100"
+                    android:id="@+id/btnAccept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tham gia"
+                    android:textAllCaps="false"
+                    android:paddingLeft="@dimen/value60"
+                    android:layout_gravity="center"
+                    android:paddingStart="@dimen/value60" />
+                <ImageView
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_soccer_orga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/value60"
+                    android:paddingStart="@dimen/value60" />
+            </RelativeLayout>
 
-            <Button
+            <RelativeLayout
+                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/value1"
                 android:layout_marginStart="@dimen/value1"
-                android:drawableStart="@drawable/ic_speech_green"
-                android:drawableLeft="@drawable/ic_speech_green"
-                android:text="Chat nhóm"
-                android:id="@+id/btnChat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAllCaps="false"
                 android:background="@color/white"
-                android:paddingLeft="@dimen/value60"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:text="Chat nhóm"
+                    android:id="@+id/btnChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:background="@color/transparent100"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/value60"
+                    android:paddingStart="@dimen/value60"
                 />
-
+                <ImageView
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_speech_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/value60"
+                    android:paddingStart="@dimen/value60" />
+            </RelativeLayout>
         </LinearLayout>
 
     </LinearLayout>

@@ -3,8 +3,10 @@ package picktokick.devfest.picktokick.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -172,7 +174,10 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                         .child(edtInputAddFr.getText().toString())
                         .child(Constanttt.USERS_listWait)
                         .child(myID).setValue(new Friend(myID, link, name));
-
+                dialog0.dismiss();
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Đã gửi lời mời thành thông!", Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.RED)
+                        .show();
             }
         });
     }

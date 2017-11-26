@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,7 +93,7 @@ public class AdapterAddFriend extends RecyclerView.Adapter<AdapterAddFriend.Recy
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView txtName;
         ImageView imgAvatar;
-        ImageView imgAccept;
+        Button imgAccept;
 
         RecyclerViewHolder(final View itemView) {
             super(itemView);

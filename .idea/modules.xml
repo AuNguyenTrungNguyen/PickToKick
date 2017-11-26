@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PickToKick.iml" filepath="$PROJECT_DIR$/PickToKick.iml" />
-      <module fileurl="file://C:\Users\buimi\Documents\PickToKick3\PickToKick.iml" filepath="C:\Users\buimi\Documents\PickToKick3\PickToKick.iml" />
       <module fileurl="file://C:\Users\phamh\Documents\GitHub\PickToKick\PickToKick.iml" filepath="C:\Users\phamh\Documents\GitHub\PickToKick\PickToKick.iml" />
+      <module fileurl="file://C:\Users\buimi\Documents\PickToKick3\PickToKick.iml" filepath="C:\Users\buimi\Documents\PickToKick3\PickToKick.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PickToKick3.iml" filepath="$PROJECT_DIR$/PickToKick3.iml" />
       <module fileurl="file://E:\HocAndroid\PickToKick\PickToKick3.iml" filepath="E:\HocAndroid\PickToKick\PickToKick3.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\phamh\Documents\GitHub\PickToKick\app\app.iml" filepath="C:\Users\phamh\Documents\GitHub\PickToKick\app\app.iml" />

@@ -168,16 +168,25 @@ public class Fragment_ThongTin extends Fragment implements AdapterView.OnItemCli
                         .getSharedPreferences(Constanttt.SHARE_REF_LOGIN, Context.MODE_PRIVATE).getString(Constanttt.LOGIN_LINK_IMG, null);
                 String name = getContext()
                         .getSharedPreferences(Constanttt.SHARE_REF_LOGIN, Context.MODE_PRIVATE).getString(Constanttt.LOGIN_NAME, null);
+                if(edtInputAddFr.getText().toString().length()<15)
+                {
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Sai ID", Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
+                else
+                {
+                    //A goi B id cua A,,,id A nam trong requestlist cua B
+                    database.child(Constanttt.USERS)
+                            .child(edtInputAddFr.getText().toString())
+                            .child(Constanttt.USERS_listWait)
+                            .child(myID).setValue(new Friend(myID, link, name));
+                    dialog0.dismiss();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Đã gửi lời mời thành thông!", Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
+                }
 
-                //A goi B id cua A,,,id A nam trong requestlist cua B
-                database.child(Constanttt.USERS)
-                        .child(edtInputAddFr.getText().toString())
-                        .child(Constanttt.USERS_listWait)
-                        .child(myID).setValue(new Friend(myID, link, name));
-                dialog0.dismiss();
-                Snackbar.make(getActivity().findViewById(android.R.id.content), "Đã gửi lời mời thành thông!", Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.RED)
-                        .show();
             }
         });
     }

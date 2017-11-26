@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="90dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -9,24 +9,32 @@
         android:layout_width="90dp"
         android:layout_height="90dp" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:padding="@dimen/value8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="90dp"
+        android:orientation="horizontal">
 
         <TextView
+            android:layout_toLeftOf="@id/imgAccept"
             android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:text="fdfd"
             android:layout_height="wrap_content"
             android:textSize="20sp" />
 
-        <ImageView
+        <Button
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:background="@drawable/shape"
+            android:layout_alignParentRight="true"
+            android:text="Đồng ý"
             android:id="@+id/imgAccept"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
             android:layout_gravity="end"
-            android:src="@drawable/icon_accept" />
 
-    </LinearLayout>
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 </LinearLayout>

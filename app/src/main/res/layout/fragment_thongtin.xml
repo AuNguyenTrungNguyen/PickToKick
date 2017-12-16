@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:text="thong tin phan hoi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</android.support.constraint.ConstraintLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/frag_profile"
+    android:orientation="vertical">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/value10"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAnhDaiDien"
+            android:layout_width="@dimen/value192"
+            android:layout_height="@dimen/value192"
+            android:layout_gravity="center_horizontal"
+            android:src="@color/colorAccent"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="@dimen/value5" />
+
+        <TextView
+            android:layout_marginTop="@dimen/value10"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="abcd"
+            android:textSize="@dimen/textSize23"
+            android:textStyle="bold" />
+        <TextView
+            android:gravity="center"
+            android:textColor="#000"
+            android:id="@+id/txtIdUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginTop="@dimen/value10"
+            android:paddingLeft="@dimen/value25"
+            android:paddingRight="@dimen/value25"
+
+            android:id="@+id/btnLogOut"
+            android:text="Đăng Xuất"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ListView
+            android:layout_marginTop="@dimen/value10"
+            android:id="@+id/listviewProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>
